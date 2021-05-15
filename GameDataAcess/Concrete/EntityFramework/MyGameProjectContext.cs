@@ -10,7 +10,7 @@ namespace GameDataAccess.Concrete.EntityFramework
 {
    public class MyGameProjectContext:DbContext
     {
-        protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=MyGameProjectDB;Trusted_Connection=true;");
         }
