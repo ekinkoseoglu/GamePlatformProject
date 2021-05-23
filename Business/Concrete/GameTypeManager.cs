@@ -1,48 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BackBone.Utilities;
 using Business.Abstract;
+using Business.Constants;
 using Entities.Concrete;
 using GameDataAccess.Abstract;
+using System;
+using System.Collections.Generic;
 
 namespace Business.Concrete
 {
-   public class GameTypeManager:IGameTypeService
-   {
-       private IGameTypeDal _gameTypeDal;
+    public class GameTypeManager : IGameTypeService
+    {
+        private IGameTypeDal _gameTypeDal;
 
-       public GameTypeManager(IGameTypeDal gameTypeDal)
-       {
-           _gameTypeDal = gameTypeDal;
-       }
-
-       public List<GameType> GetAll()
-       {
-          return _gameTypeDal.GetAll();
-       }
-
-        public GameType Get(int id)
+        public GameTypeManager(IGameTypeDal gameTypeDal)
         {
-            return _gameTypeDal.Get(p=>p.TypeId==id);
+            _gameTypeDal = gameTypeDal;
+        }
+
+        public IDataResult<List<GameType>> GetAll()
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorDataResult<List<GameType>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<GameType>>(_gameTypeDal.GetAll(), Messages.TypeListed);
+        }
+
+        public IDataResult<GameType> Get(int id)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorDataResult<GameType>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<GameType>(_gameTypeDal.Get(p => p.TypeId == id), Messages.HasShown);
 
         }
 
-        public void Add(GameType entity)
+        public IResult Add(GameType entity)
         {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
             _gameTypeDal.Add(entity);
+            return new SuccessResult(Messages.TypeAdded);
         }
 
-        public void Delete(GameType entity)
+        public IResult Delete(int id)
         {
-            var deletedType = _gameTypeDal.Get(p => p.TypeId == entity.TypeId);
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
+            var deletedType = _gameTypeDal.Get(p => p.TypeId == id);
             _gameTypeDal.Delete(deletedType);
+            return new SuccessResult(Messages.TypeDeleted);
         }
 
-        public void Update(GameType entity)
+        public IResult Update(GameType entity)
         {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
             _gameTypeDal.Update(entity);
+            return new SuccessResult(Messages.TypeUpdated);
         }
     }
 }

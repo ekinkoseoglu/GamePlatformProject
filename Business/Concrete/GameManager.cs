@@ -1,52 +1,80 @@
-﻿using Business.Abstract;
-
+﻿using BackBone.Utilities;
+using Business.Abstract;
+using Business.Constants;
 using Entities.Concrete;
+using GameDataAccess.Abstract;
 using System;
 using System.Collections.Generic;
-using GameDataAccess.Abstract;
 
 namespace Business.Concrete
 {
-    public class GameManager:IGameService
-   {
-       private IGameDal _gameDal;
+    public class GameManager : IGameService
+    {
+        private IGameDal _gameDal;
 
-       public GameManager(IGameDal gameDal)
-       {
-           _gameDal = gameDal;
-       }
+        public GameManager(IGameDal gameDal)
+        {
+            _gameDal = gameDal;
+        }
 
-       public List<Game> GetAll()
-       {
-           return _gameDal.GetAll();
-       }
+        public IDataResult<List<Game>> GetAll()
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorDataResult<List<Game>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Game>>(_gameDal.GetAll(), Messages.ListedGame);
+        }
 
-       public List<Game> GetByPrice(decimal min, decimal max)
-       {
-           return _gameDal.GetAll(p => p.Price <= min && p.Price >= max);
-       }
+        public IDataResult<List<Game>> GetByPrice(decimal min, decimal max)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorDataResult<List<Game>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Game>>(_gameDal.GetAll(p => p.Price <= min && p.Price >= max), Messages.ListedGame);
+        }
 
-       public Game Get(int id)
-       {
-           return _gameDal.Get(p=>p.GameId== id);
-       }
+        public IDataResult<Game> Get(int id)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorDataResult<Game>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<Game>(_gameDal.Get(p => p.GameId == id), Messages.HasShown);
+        }
 
-       public void Add(Game entity)
-       {
-           _gameDal.Add(entity);
-       }
+        public IResult Add(Game entity)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
+            _gameDal.Add(entity);
+            return new SuccessResult(Messages.AddedGame);
+        }
 
-       public void Delete(Game entity)
-       {
-           var deletedGame = _gameDal.Get(p => p.GameId == entity.GameId);
-           _gameDal.Delete(deletedGame);
-       }
+        public IResult Delete(Game entity)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
+            var deletedGame = _gameDal.Get(p => p.GameId == entity.GameId);
+            _gameDal.Delete(deletedGame);
+            return new SuccessResult(Messages.DeletedGame);
+        }
 
-       public void Update(Game entity)
-       {
-           _gameDal.Update(entity);
-       }
-   }
+        public IResult Update(Game entity)
+        {
+            if (DateTime.Now.Hour > 23 && DateTime.Now.Hour < 7)
+            {
+                return new ErrorResult(Messages.MaintenanceTime);
+            }
+            _gameDal.Update(entity);
+            return new SuccessResult(Messages.UpdatedGame);
+        }
+    }
 
-    
+
 }

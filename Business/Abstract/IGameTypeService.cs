@@ -1,19 +1,16 @@
-﻿using System;
+﻿using Entities.Concrete;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entities.Concrete;
+using BackBone.Utilities;
 
 namespace Business.Abstract
 {
-   public interface IGameTypeService
-   {
-       List<GameType> GetAll();
-       GameType Get(int id);
+    public interface IGameTypeService
+    {
+        IDataResult<List<GameType>> GetAll();
+        IDataResult<GameType> Get(int id);
 
-       void Add(GameType entity);
-       void Delete(GameType entity);
-       void Update(GameType entity);
+        IResult Add(GameType entity);
+        IResult Delete(int id);
+        IResult Update(GameType entity);
     }
 }
