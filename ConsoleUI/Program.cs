@@ -1,5 +1,4 @@
 ﻿using Business.Concrete;
-using Entities.Concrete;
 using GameDataAccess.Concrete.EntityFramework;
 using System;
 
@@ -26,20 +25,20 @@ namespace ConsoleUI
             Console.WriteLine("------");
             foreach (var x in gameTypeManager.GetAll().Data)
             {
-                Console.WriteLine(x.TypeName);
+                Console.WriteLine(x.TypeName + "---" + x.TypeId);
             }
 
             Console.WriteLine("----------");
 
-            var result = gameTypeManager.Add(new GameType { TypeName = "Reflect" });
-            Console.WriteLine(result.Message);
+            //var result = gameTypeManager.Add(new GameType { TypeName = "Reflect" });
+            //Console.WriteLine(result.Message);
 
-            foreach (var x in gameTypeManager.GetAll().Data)
-            {
-                Console.WriteLine(x.TypeName);
-            }
+            //foreach (var x in gameTypeManager.GetAll().Data)
+            //{
+            //    Console.WriteLine(x.TypeName);
+            //}
 
-            Console.WriteLine(gameTypeManager.GetAll().Message);
+            //Console.WriteLine(gameTypeManager.GetAll().Message);
 
 
 

@@ -1,6 +1,6 @@
-﻿using Entities.Concrete;
+﻿using BackBone.Utilities;
+using Entities.Concrete;
 using System.Collections.Generic;
-using BackBone.Utilities;
 
 namespace Business.Abstract
 {

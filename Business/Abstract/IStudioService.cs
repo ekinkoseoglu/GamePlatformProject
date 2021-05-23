@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BackBone.Utilities;
+﻿using BackBone.Utilities;
 using Entities.Concrete;
+using System.Collections.Generic;
 
 namespace Business.Abstract
 {
-   public interface IStudioService
+    public interface IStudioService
     {
         IDataResult<List<Studio>> GetAll();
         IDataResult<Studio> Get(int id);

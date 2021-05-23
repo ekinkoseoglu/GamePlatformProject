@@ -1,11 +1,9 @@
 ﻿using BackBone.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace BackBone.DataAccess.EntityFramework
 {
@@ -16,7 +14,7 @@ namespace BackBone.DataAccess.EntityFramework
     {
         public void Add(IEntity entity)
         {
-            using (TContext context=new TContext())
+            using (TContext context = new TContext())
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
@@ -48,7 +46,7 @@ namespace BackBone.DataAccess.EntityFramework
 
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            using (TContext context =new TContext())
+            using (TContext context = new TContext())
             {
                 return filter == null ?
                     context.Set<TEntity>().ToList()

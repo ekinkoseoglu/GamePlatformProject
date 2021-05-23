@@ -10,14 +10,14 @@
         {
         }
 
-        public ErrorDataResult(string message):base(default,message,false)      
+        public ErrorDataResult(string message) : base(default, message, false)
         {
-            
+
         }
 
-        public ErrorDataResult():base(default,false)
+        public ErrorDataResult() : base(default, false)
         {
-            
+
         }
     }
 }

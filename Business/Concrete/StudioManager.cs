@@ -23,7 +23,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<Studio>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Studio>>(_studioDal.GetAll(),Messages.StudioListed);
+            return new SuccessDataResult<List<Studio>>(_studioDal.GetAll(), Messages.StudioListed);
         }
 
         public IDataResult<Studio> Get(int id)
@@ -32,7 +32,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<Studio>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<Studio>(_studioDal.Get(p => p.StudioId == id),Messages.HasShown);
+            return new SuccessDataResult<Studio>(_studioDal.Get(p => p.StudioId == id), Messages.HasShown);
         }
 
         public IResult Add(Studio entity)
